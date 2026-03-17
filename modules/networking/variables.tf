@@ -54,12 +54,6 @@ variable "onprem_vpn_ip" {
   description = "On premises vpn ip"
 }
 
-
-variable "onprem_cidr" {
-  type        = string
-  description = "On premises cidrs ips"
-}
-
 variable "vpn_shared_secret" {
   type        = string
   description = "Shaed Secrets VPN"

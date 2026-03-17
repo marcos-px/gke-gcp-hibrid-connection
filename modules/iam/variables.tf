@@ -22,3 +22,8 @@ variable "app_sa_email" {
   description = "Application service account email"
   type        = string
 }
+
+variable "github_actions_tf_sa_email" {
+  description = "GitHub Actions Terraform service account email"
+  type        = string
+}

@@ -71,11 +71,6 @@ resource "google_container_cluster" "main" {
 
   datapath_provider = "ADVANCED_DATAPATH"
 
-  network_policy {
-    enabled  = false
-    provider = "CALICO"
-  }
-
   addons_config {
     horizontal_pod_autoscaling {
       disabled = false

@@ -90,7 +90,7 @@ resource "google_project_iam_member" "github_actions_tf_roles" {
 
   project = var.service_project_id
   role    = each.value
-  member  = "serviceAccount:${var.app_sa_email}"
+  member  = "serviceAccount:${var.github_actions_tf_sa_email}"
 }
 
 resource "google_project_iam_member" "github_actions_tf_host_roles" {
@@ -101,5 +101,5 @@ resource "google_project_iam_member" "github_actions_tf_host_roles" {
 
   project = var.host_project_id
   role    = each.value
-  member  = "serviceAccount:${var.app_sa_email}"
+  member  = "serviceAccount:${var.github_actions_tf_sa_email}"
 }

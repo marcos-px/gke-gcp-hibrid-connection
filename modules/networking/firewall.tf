@@ -90,10 +90,6 @@ resource "google_compute_firewall" "allow_master_to_nodes" {
 
 }
 
-resource "google" "name" {
-
-}
-
 resource "google_compute_firewall" "deny_all_egress" {
   project     = var.host_project_id
   name        = "${var.vpc_name}-deny-all-egress"
@@ -106,7 +102,7 @@ resource "google_compute_firewall" "deny_all_egress" {
     protocol = "all"
   }
 
-  source_ranges = ["0.0.0.0/0"]
+  destination_ranges = ["0.0.0.0/0"]
 
   log_config {
     metadata = "INCLUDE_ALL_METADATA"
