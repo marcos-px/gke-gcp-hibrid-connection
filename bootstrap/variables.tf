@@ -34,16 +34,16 @@ variable "service_project_id" {
 }
 
 variable "github_org" {
-  type = string
+  type        = string
   description = "User or org with Github"
 }
 
 variable "terraform_repo" {
-  type = string
+  type        = string
   description = "Name of terraform repo"
 }
 
 variable "app_repo" {
-  type = string
+  type        = string
   description = "Name of app repo"
 }

@@ -20,31 +20,31 @@ resource "google_iam_workload_identity_pool_provider" "github" {
 
   attribute_condition = "attribute.repository == \"${var.github_org}/${var.terraform_repo}\""
 
-    oidc {
-        issuer_uri = "https://token.actions.githubusercontent.com"
-    }
+  oidc {
+    issuer_uri = "https://token.actions.githubusercontent.com"
+  }
 }
 
 resource "google_service_account" "github_actions_tf" {
-    project = google_project.service.project_id
-    account_id = "github-actions-tf"
-    display_name = "Github Actions - Terraform"
-    description = "Impersonate with WIF terraform"      
+  project      = google_project.service.project_id
+  account_id   = "github-actions-tf"
+  display_name = "Github Actions - Terraform"
+  description  = "Impersonate with WIF terraform"
 }
 
 resource "google_service_account_iam_binding" "github_wif_tf" {
-    service_account_id = google_service_account.github_actions_tf.name
-    role = "roles/iam.workloadIdentityUser"
+  service_account_id = google_service_account.github_actions_tf.name
+  role               = "roles/iam.workloadIdentityUser"
 
-    members = [     "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github.name}/attribute.repository/${var.github_org}/${var.terraform_repo}"
- ]
+  members = ["principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.github.name}/attribute.repository/${var.github_org}/${var.terraform_repo}"
+  ]
 }
 
 resource "google_service_account" "github_actions_app" {
-    project = google_project.service.project_id
-    account_id = "github-actions-app"
-    display_name = "Github Actions - App"
-    description = "Impersonate with WIF for push in Artifact Registry"
+  project      = google_project.service.project_id
+  account_id   = "github-actions-app"
+  display_name = "Github Actions - App"
+  description  = "Impersonate with WIF for push in Artifact Registry"
 
 }
 

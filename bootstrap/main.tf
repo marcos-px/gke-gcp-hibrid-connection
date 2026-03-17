@@ -17,7 +17,7 @@ resource "google_project" "host" {
 resource "google_project" "service" {
   name            = var.project_service
   project_id      = var.service_project_id
-  billing_account = vari.billing_account_id
+  billing_account =     var.billing_account_id
 
   auto_create_network = false
 }
