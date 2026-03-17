@@ -58,3 +58,8 @@ variable "vpn_shared_secret" {
   type        = string
   description = "Shaed Secrets VPN"
 }
+
+variable "org_id" {
+  type        = string
+  description = "GCP Organization numeric ID for VPC Service Controls"
+}

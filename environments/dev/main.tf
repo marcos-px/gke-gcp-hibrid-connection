@@ -26,6 +26,7 @@ module "networking" {
   onprem_vpn_ip      = var.onprem_vpn_ip
   vpn_shared_secret  = var.vpn_shared_secret
   gcp_asn            = var.gcp_asn
+  org_id             = var.org_id
 }
 
 module "gke" {
@@ -51,12 +52,13 @@ module "gke" {
 module "iam" {
   source = "../../modules/iam"
 
-  host_project_id          = local.host_project_id
-  service_project_id       = local.service_project_id
-  environment              = "develop"
-  gke_node_sa_email        = module.gke.node_service_account_email
-  app_sa_email             = module.gke.app_service_account_email
+  host_project_id            = local.host_project_id
+  service_project_id         = local.service_project_id
+  environment                = "develop"
+  gke_node_sa_email          = module.gke.node_service_account_email
+  app_sa_email               = module.gke.app_service_account_email
   github_actions_tf_sa_email = data.terraform_remote_state.bootstrap.outputs.github_actions_tf_sas["develop"]
+    
 }
 
 module "database" {

@@ -108,3 +108,8 @@ variable "availability_type" {
   type        = string
   default     = "ZONAL"
 }
+
+variable "org_id" {
+  type        = string
+  description = "GCP Organization numeric ID for VPC Service Controls"
+}

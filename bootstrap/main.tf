@@ -35,14 +35,14 @@ resource "google_project" "host" {
 
 
   auto_create_network = false
-  deletion_policy = "PREVENT"
+  deletion_policy     = "PREVENT"
 
   lifecycle {
     prevent_destroy = false
-    ignore_changes = [ 
-        billing_account,
-        org_id,
-     ]
+    ignore_changes = [
+      billing_account,
+      org_id,
+    ]
   }
 }
 
@@ -56,14 +56,14 @@ resource "google_project" "service" {
   folder_id = google_folder.environments[each.value].name
 
   auto_create_network = false
-  deletion_policy = "PREVENT"
+  deletion_policy     = "PREVENT"
 
-lifecycle {
+  lifecycle {
     prevent_destroy = false
-    ignore_changes = [ 
-        billing_account,
-        org_id,
-     ]
+    ignore_changes = [
+      billing_account,
+      org_id,
+    ]
   }
 }
 
