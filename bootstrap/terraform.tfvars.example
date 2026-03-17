@@ -1,9 +1,15 @@
 billing_account_id = "XXXXXX-XXXXXX-XXXXXX"
-host_project_id    = "xxxxxxxxxx"
-service_project_id = "xxxxxxxxxx"
+org_id             = "YOUR_ORG_NUMERIC_ID"  # gcloud organizations list
 region             = "southamerica-east1"
-github_org         = "xxxxxxxxxx"
-terraform_repo     = "xxxxxxxxxx-xxxxxxxxxx-connection"
-app_repo           = "xxxxxxxxxx-xxxxxxxxxx-app"
-project_host = "xxxxxxxxxxx"
-project_service "xxxxxxxxxx"
+github_org         = "XXXXXX"
+terraform_repo     = "gke-gcp-hibrid-connection"
+app_repo           = "gke-gcp-hibrid-app"
+
+environments       = ["develop", "staging", "production"]
+active_environment = "develop"
+
+notification_email = "YOUR_EMAIL"
+api_uptime_url     = ""
+
+db_tier           = "db-f1-micro"
+availability_type = "ZONAL"

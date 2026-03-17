@@ -1,0 +1,41 @@
+region   = "southamerica-east1"
+vpc_name = "lab-k8s-vpc"
+
+nodes_cidr    = "10.0.0.0/24"
+pods_cidr     = "10.1.0.0/16"
+services_cidr = "10.2.0.0/20"
+masters_cidr  = "10.3.0.0/28"
+onprem_cidr   = "172.29.32.0/20"
+
+onprem_vpn_ip = "YOUR_PUBLIC_IP"
+
+vpn_shared_secret = "YOUR_STRONG_RANDOM_SECRET"
+
+authorized_networks = [
+  {
+    cidr_block   = "YOUR_WORKSTATION_IP/32"
+    display_name = "workstation"
+  },
+  {
+    cidr_block   = "YOUR_OCI_IP/32"
+    display_name = "oci-gateway"
+  }
+]
+
+cluster_name = "xxxxxxxxxxxxxxxx"
+
+node_pools = {
+  general = {
+    machine_type   = "e2-standard-2"
+    disk_size_gb   = 50
+    disk_type      = "pd-standard"
+    min_node_count = 1
+    max_node_count = 3
+    initial_count  = 1
+    preemptible    = true
+    labels = {
+      role = "general"
+    }
+    taints = []
+  }
+}

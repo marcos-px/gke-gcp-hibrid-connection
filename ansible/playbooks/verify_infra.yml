@@ -1,0 +1,65 @@
+- name: Check GKE Cluster
+  hosts: gke
+  gather_facts: false
+  tasks:
+    - name: Update local kubeconfig
+      command: "{{ kubeconfig_cmd }}"
+      delegate_to: localhost
+      changed_when: false
+
+    - name: Get cluster nodes
+      command: kubectl get nodes -o wide
+      delegate_to: localhost
+      register: nodes_output
+      changed_when: false
+
+    - name: Display node status
+      debug:
+        var: nodes_output.stdout_lines
+
+    - name: Check system pods
+      command: kubectl get pods -n kube-system
+      delegate_to: localhost
+      register: pods_output
+      changed_when: false
+
+    - name: Fail if pods are not Running
+      fail:
+        msg: "Non-running pod detected!"
+      when: "'Pending' in pods_output.stdout or 'CrashLoop' in pods_output.stdout"
+
+- name: Check Cloud SQL
+  hosts: cloudsql
+  gather_facts: false
+  tasks:
+    - name: Check instance status
+      command: >
+        gcloud sql instances describe {{ instance_name }}
+        --project {{ gcp_service_project }}
+        --format="value(state)"
+      delegate_to: localhost
+      register: sql_state
+      changed_when: false
+
+    - name: Fail if instance not RUNNABLE
+      fail:
+        msg: "Cloud SQL is {{ sql_state.stdout }}, expected RUNNABLE"
+      when: sql_state.stdout != "RUNNABLE"
+
+- name: Check Secret Manager
+  hosts: cloudsql
+  gather_facts: false
+  tasks:
+    - name: Verify secret exists
+      command: >
+        gcloud secrets versions access latest
+        --secret="db-password"
+        --project="{{ gcp_service_project }}"
+      delegate_to: localhost
+      register: secret_check
+      changed_when: false
+      no_log: true
+
+    - name: Secret found
+      debug:
+        msg: "Secret db-password is accessible"

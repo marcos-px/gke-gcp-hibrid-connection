@@ -47,3 +47,22 @@ variable "app_repo" {
   type        = string
   description = "Name of app repo"
 }
+
+variable "org_id" {
+  type        = string
+  description = "GCP Organization numeric ID."
+
+}
+
+variable "environments" {
+  type        = list(string)
+  default     = ["develop", "staging", "production"]
+  description = "List of environment names to create as GCP folders"
+
+}
+
+variable "active_environment" {
+  type        = string
+  description = "Active environment for this Terraform workspace (develop | staging | production)"
+
+}

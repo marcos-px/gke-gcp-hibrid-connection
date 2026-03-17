@@ -1,0 +1,13 @@
+ansible_python_interpreter: /usr/bin/python3
+
+gcp_auth_kind: application
+gcp_scopes:
+  - https://www.googleapis.com/auth/cloud-platform
+
+gcp_api_retries: 3
+gcp_api_delay: 5
+
+default_labels:
+  managed-by: terraform
+  env: dev
+  team: platform

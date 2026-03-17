@@ -1,0 +1,31 @@
+plugin: google.cloud.gcp_compute
+
+projects:
+  - lab-k8s-host
+  - lab-k8s-svc
+
+regions:
+  - southamerica-east1
+
+auth_kind: application
+
+keyed_groups:
+
+  - key: labels.env
+    prefix: env
+
+  - key: labels.role
+    prefix: role
+
+  - key: zone
+    prefix: zone
+
+filters:
+  - labels.managed-by = terraform
+
+hostnames:
+  - private_ip
+  - name
+
+compose:
+  ansible_host: networkInterfaces[0].networkIP

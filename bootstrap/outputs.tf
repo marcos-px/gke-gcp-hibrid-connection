@@ -1,30 +1,55 @@
-output "host_project_id" {
-  value       = google_project.host.project_id
-  description = "Host project ID - Networking module required"
+output "folder_ids" {
+  description = "GCP folder by environment name"
+  value = {
+    for env in var.environments :
+    env => google_folder.environments[env].folder_id
+  }
 }
 
-output "service_project_id" {
-  value       = google_project.service.project_id
-  description = "Service Project ID - GKE and app required"
+output "host_project_ids" {
+  description = "Host project IDs indexed by environment name"
+  value = {
+    for env in var.environments :
+    env => google_project.host[env].project_id
+  }
 }
 
-output "workload_identity_provider" {
-  value       = google_iam_workload_identity_pool_provider.github.name
-  description = "Resource name WIF Provider"
+output "service_project_ids" {
+  description = "Service project IDs indexed by environment name"
+  value = {
+    for env in var.environments :
+    env => google_project.service[env].project_id
+  }
 }
 
-output "github_actions_tf_sa" {
-  value       = google_service_account.github_actions_tf.email
-  description = "SA Email with Terraform"
+output "workload_identity_providers" {
+  description = "WIF provider resource names indexed by environment — add to GitHub Secrets"
+  value = {
+    for env in var.environments :
+    env => google_iam_workload_identity_pool_provider.github[env].name
+  }
 }
 
-output "github_actions_app_sa" {
-  value       = google_service_account.github_actions_app.email
-  description = "SA Email with App"
+output "github_actions_tf_sas" {
+  description = "Terraform service account emails indexed by environment"
+  value = {
+    for env in var.environments :
+    env => google_service_account.github_actions_tf[env].email
+  }
 }
 
-output "artifact_registry_url" {
-  value       = "${var.region}-docker.pkg.dev/${google_project.service.project_id}/app-images"
-  description = "URL base Artifact Registry"
+output "github_actions_app_sas" {
+  description = "App build service account emails indexed by environment"
+  value = {
+    for env in var.environments :
+    env => google_service_account.github_actions_app[env].email
+  }
+}
 
+output "artifact_registry_urls" {
+  description = "Artifact Registry base URLs indexed by environment"
+  value = {
+    for env in var.environments :
+    env => "${var.region}-docker.pkg.dev/${google_project.service[env].project_id}/app-images-${local.env_suffix[env]}"
+  }
 }

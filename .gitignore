@@ -1,3 +1,6 @@
 .terraform.lock.hcl
 .terraform
 bootstrap/terraform.tfvars
+
+ansible/inventory/inventory.yml
+.env.generated
