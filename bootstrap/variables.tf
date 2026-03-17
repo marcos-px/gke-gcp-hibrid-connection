@@ -32,3 +32,18 @@ variable "service_project_id" {
   default     = "lab-k8s-service"
   description = "Project service id"
 }
+
+variable "github_org" {
+  type = string
+  description = "User or org with Github"
+}
+
+variable "terraform_repo" {
+  type = string
+  description = "Name of terraform repo"
+}
+
+variable "app_repo" {
+  type = string
+  description = "Name of app repo"
+}
